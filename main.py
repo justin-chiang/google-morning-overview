@@ -1,5 +1,8 @@
+from datetime import datetime
 from dateutil import parser
+
 from gservices import create_service, get_todays_events
+from snspublish import publish
 
 CRED_FILE = 'credentials.json'
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/tasks.readonly']
@@ -27,4 +30,8 @@ for event in todays_events:
     else:
         calendar_overview += f'all day: {name}\n'
 
-print(calendar_overview)
+curr_date = datetime.now()
+subject = f'daily overview - {curr_date.strftime("%b %d").lower()} ◝(๑꒪່౪̮꒪່๑)◜'
+message = f'daily overview for {curr_date.strftime("%B %d %Y").lower()}:\n\n{calendar_overview}'
+
+publish(subject, message)
