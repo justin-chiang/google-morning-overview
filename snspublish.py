@@ -1,15 +1,29 @@
+import os
 import boto3
-
 from dotenv import dotenv_values
 
-env = dotenv_values(".env")
+LOCAL = False
 
 def publish(subject, message):
-    arn = env['ARN']
+    arn = ''
+    access_key = ''
+    secret_key = ''
+
+    if LOCAL:
+        env = dotenv_values(".env")
+        arn = env['ARN']
+        access_key = env['ACCESS_KEY']
+        secret_key = env['SECRET_ACCESS_KEY']
+    else:
+        print('OS ENVIRON')
+        arn = os.environ['ARN']
+        access_key = os.environ['ACCESS_KEY']
+        secret_key = os.environ['SECRET_ACCESS_KEY']
+
     sns_client = boto3.client(
         'sns',
-        aws_access_key_id=env['ACCESS_KEY'],
-        aws_secret_access_key=env['SECRET_ACCESS_KEY'],
+        aws_access_key_id=access_key,
+        aws_secret_access_key=secret_key,
         region_name='us-west-1'
     )
 
