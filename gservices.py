@@ -51,9 +51,6 @@ def get_tasks(service):
     start = datetime(today.year, today.month, today.day).isoformat() + 'Z'
     end = (datetime(today.year, today.month, today.day) + timedelta(1)).isoformat() + 'Z'
 
-    print(start)
-    print(end)
-
     tasklists = service.tasklists().list().execute()
     list_id = tasklists['items'][0]['id']
 

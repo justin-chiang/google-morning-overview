@@ -2,7 +2,7 @@ import os
 import boto3
 from dotenv import dotenv_values
 
-LOCAL = False
+LOCAL = True
 
 def publish(subject, message):
     arn = ''
@@ -15,7 +15,6 @@ def publish(subject, message):
         access_key = env['ACCESS_KEY']
         secret_key = env['SECRET_ACCESS_KEY']
     else:
-        print('OS ENVIRON')
         arn = os.environ['ARN']
         access_key = os.environ['ACCESS_KEY']
         secret_key = os.environ['SECRET_ACCESS_KEY']
