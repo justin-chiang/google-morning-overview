@@ -1,5 +1,6 @@
 import os
 from datetime import datetime, timedelta
+import json
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -44,3 +45,26 @@ def get_todays_events(service):
             break
 
     return todays_events
+
+def get_tasks(service):
+    today = datetime.now().date()
+    start = datetime(today.year, today.month, today.day).isoformat() + 'Z'
+    end = (datetime(today.year, today.month, today.day) + timedelta(1)).isoformat() + 'Z'
+
+    print(start)
+    print(end)
+
+    tasklists = service.tasklists().list().execute()
+    list_id = tasklists['items'][0]['id']
+
+    tasks_list = []
+    page_token = None
+    while True:
+        tasks = service.tasks().list(tasklist=list_id, showCompleted=False, dueMin=start, dueMax=end).execute()
+        for task in tasks['items']:
+            tasks_list.append(task)
+        page_token = tasks.get('nextPageToken')
+        if not page_token:
+            break
+
+    return tasks_list
