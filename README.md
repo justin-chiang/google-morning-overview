@@ -1,4 +1,4 @@
-# Scheduled Daily Overview
+# Morning Google Overview
 
 Python script for fetching daily events and tasks from Google Calendar/Tasks and formatting information in a brief overview. Implemented to run as a scheduled job to run daily at 8am.
 
