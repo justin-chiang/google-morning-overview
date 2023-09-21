@@ -4,17 +4,21 @@ FROM python:${PYTHON_VERSION}-slim as base
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-ARG key
-ENV ACCESS_KEY="$key"
+ARG ACCESS_KEY
+ENV ACCESS_KEY="$ACCESS_KEY"
 
-ARG secret
-ENV SECRET_ACCESS_KEY="$secret"
+ARG SECRET_ACCESS_KEY
+ENV SECRET_ACCESS_KEY="$SECRET_ACCESS_KEY"
 
-ARG arn
-ENV ARN="$arn"
+ARG ARN
+ENV ARN="$ARN"
 
 WORKDIR /app
-COPY . .
+
+COPY requirements.txt .
+COPY main.py .
+COPY ./scripts ./scripts
+COPY ./creds ./creds
 
 RUN pip install -r requirements.txt
 

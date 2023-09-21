@@ -1,6 +1,5 @@
 import os
 from datetime import datetime, timedelta
-import json
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -8,6 +7,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+# Create Google Service with specified name, version, credentials, and permission scopes
 def create_service(api_name, api_version, cred_file, scopes):
     creds = None
     if os.path.exists('creds/token.json'):
@@ -29,8 +29,9 @@ def create_service(api_name, api_version, cred_file, scopes):
     except HttpError as err:
         print(err)
 
+# Retrieve today's events from Google Calendar API
 def get_todays_events(service):
-    today = datetime.utcnow().date()
+    today = datetime.now().date()
     start = datetime(today.year, today.month, today.day, hour=7).isoformat() + 'Z'
     end = (datetime(today.year, today.month, today.day, hour=7) + timedelta(1)).isoformat() + 'Z'
 
@@ -46,6 +47,7 @@ def get_todays_events(service):
 
     return todays_events
 
+# Retrieve today's tasks from Google Tasks API
 def get_tasks(service):
     today = datetime.now().date()
     start = datetime(today.year, today.month, today.day).isoformat() + 'Z'

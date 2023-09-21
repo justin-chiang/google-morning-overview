@@ -2,8 +2,10 @@ import os
 import boto3
 from dotenv import dotenv_values
 
-LOCAL = True
+# Determines if script is running locally or on cloud
+LOCAL = False
 
+# Send email using AWS SNS
 def publish(subject, message):
     arn = ''
     access_key = ''
